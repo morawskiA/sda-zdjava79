@@ -2,6 +2,9 @@ package pl.sdacademy.hibernate.hello.workshop1;
 
 import pl.sdacademy.hibernate.hello.common.Country;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Scanner;
 
 public class Workshop1 {
@@ -14,6 +17,14 @@ public class Workshop1 {
     }
 
     public static Country loadCountryByCode(String code) {
-        throw new UnsupportedOperationException("TODO");
+        EntityManagerFactory entityManagerFactory =
+                Persistence.createEntityManagerFactory("HelloHibernatePU");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            return entityManager.find(Country.class, code);
+        } finally {
+            entityManagerFactory.close();
+        }
     }
 }
